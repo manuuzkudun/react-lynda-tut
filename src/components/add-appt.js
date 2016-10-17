@@ -1,14 +1,26 @@
 import React from 'react';
 
 export default class AddAppt extends React.Component {
+  constructor(props) {
+    super(props);
+    this.toogleFormDisplay = this.toogleFormDisplay.bind(this);
+  }
+
+  toogleFormDisplay() {
+    this.props.handleToogle();
+  }
+
   render(){
+    let displayFormBody = {
+      display: this.props.bodyVisible ? 'block' : 'none'
+    };
     return(
       <div className="panel panel-primary">
-        <div className="panel-heading apt-addheading">
+        <div className="panel-heading apt-addheading" onClick={this.toogleFormDisplay}>
           <span className="glyphicon glyphicon-plus"></span>
           Add Appointment
         </div>
-        <div className="panel-body">
+        <div className="panel-body" style={ displayFormBody }>
           <form className="add-appointment form-horizontal">
             <div className="form-group">
               <label className="col-sm-2 control-label" htmlFor="petName">Pet Name</label>

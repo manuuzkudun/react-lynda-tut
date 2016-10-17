@@ -8,10 +8,12 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      appointments: []
+      appointments: [],
+      apptBodyVisible: false
     };
     this.removeAppointment = this.removeAppointment.bind(this);
     this.listAppointments = this.listAppointments.bind(this);
+    this.addDisplay = this.addDisplay.bind(this);
   }
 
   removeAppointment(item) {
@@ -41,10 +43,17 @@ export default class App extends Component {
     });
   }
 
+  addDisplay() {
+    this.setState({apptBodyVisible: !this.state.apptBodyVisible});
+  }
+
   render() {
     return (
       <div className="interface">
-        <AddAppt />
+        <AddAppt
+          bodyVisible={this.state.apptBodyVisible}
+          handleToogle={this.addDisplay}
+        />
         <ul className="item-list media-list">
           { this.state.appointments.map( this.listAppointments )}
         </ul>
