@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import PetApptList from './pet-appt-list';
+import PetApptItem from './pet-appt-item';
 import axios from 'axios';
 import _ from 'lodash';
 
@@ -10,12 +10,27 @@ export default class App extends Component {
       appointments: []
     };
     this.removeAppointment = this.removeAppointment.bind(this);
+    this.listAppointments = this.listAppointments.bind(this);
   }
 
   removeAppointment(item) {
     let appts = this.state.appointments;
     appts = _.without(appts,item);
-    this.setState(appts);
+    this.setState({appointments: appts});
+  }
+
+  listAppointments(item,index) {
+    return (
+      <PetApptItem
+        key={index}
+        onDelete={ item => this.removeAppointment(item) }
+        whichItem={ item }
+        petName={ item.petName }
+        aptDate={ item.aptDate }
+        ownerName={ item.ownerName }
+        aptNotes={ item.aptNotes }
+      />
+    );
   }
 
   componentDidMount(){
@@ -28,10 +43,9 @@ export default class App extends Component {
   render() {
     return (
       <div className="interface">
-        <PetApptList
-          data={this.state.appointments}
-          removeAppt={this.removeAppointment}
-          />
+        <ul className="item-list media-list">
+          { this.state.appointments.map( this.listAppointments )}
+        </ul>
       </div>
     ) //return
   } //render

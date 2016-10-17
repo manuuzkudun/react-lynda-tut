@@ -14,7 +14,7 @@ export default class PetApptList extends Component {
     return (
       <PetApptItem
         key={index}
-        onDelete={ this.props.removeAppt(this.props.whichItem) }
+        onDelete={ console.log(this) }
         whichItem={ item }
         petName={ item.petName }
         aptDate={ item.aptDate }
