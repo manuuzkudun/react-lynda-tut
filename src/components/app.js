@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PetApptList from './pet-appt-list';
 import axios from 'axios';
+import _ from 'lodash';
 
 export default class App extends Component {
   constructor(props) {
@@ -8,6 +9,13 @@ export default class App extends Component {
     this.state = {
       appointments: []
     };
+    this.removeAppointment = this.removeAppointment.bind(this);
+  }
+
+  removeAppointment(item) {
+    let appts = this.state.appointments;
+    appts = _.without(appts,item);
+    this.setState(appts);
   }
 
   componentDidMount(){
@@ -20,7 +28,10 @@ export default class App extends Component {
   render() {
     return (
       <div className="interface">
-        <PetApptList data={this.state.appointments}/>
+        <PetApptList
+          data={this.state.appointments}
+          removeAppt={this.removeAppointment}
+          />
       </div>
     ) //return
   } //render

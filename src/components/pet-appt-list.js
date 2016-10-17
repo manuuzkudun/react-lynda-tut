@@ -7,14 +7,19 @@ export default class PetApptList extends Component {
     super(props);
     this.eachDataItem = this.eachDataItem.bind(this);
   }
+
+
+
   eachDataItem(item,index) {
     return (
       <PetApptItem
         key={index}
-        petName={item.petName}
-        aptDate={item.aptDate}
-        ownerName={item.ownerName}
-        aptNotes={item.aptNotes}
+        onDelete={ this.props.removeAppt(this.props.whichItem) }
+        whichItem={ item }
+        petName={ item.petName }
+        aptDate={ item.aptDate }
+        ownerName={ item.ownerName }
+        aptNotes={ item.aptNotes }
       />
     );
   }
