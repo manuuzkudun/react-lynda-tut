@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PetApptItem from './pet-appt-item';
+import AddAppt from './add-appt';
 import axios from 'axios';
 import _ from 'lodash';
 
@@ -43,6 +44,7 @@ export default class App extends Component {
   render() {
     return (
       <div className="interface">
+        <AddAppt />
         <ul className="item-list media-list">
           { this.state.appointments.map( this.listAppointments )}
         </ul>
