@@ -18,6 +18,8 @@ export default class App extends Component {
     this.listAppointments = this.listAppointments.bind(this);
     this.addDisplay = this.addDisplay.bind(this);
     this.addAppointment = this.addAppointment.bind(this);
+    this.setSortProperty = this.setSortProperty.bind(this);
+    this.setSortOrder = this.setSortOrder.bind(this);
   }
 
   addAppointment(appt) {
@@ -46,6 +48,14 @@ export default class App extends Component {
     );
   }
 
+  setSortProperty(prop) {
+    this.setState({orderBy: prop});
+  }
+
+  setSortOrder(prop) {
+    this.setState({orderDir: prop});
+  }
+
   componentDidMount(){
     axios.get(this.props.source)
       .then((res) => {
@@ -61,7 +71,7 @@ export default class App extends Component {
     let filteredAppts = this.state.appointments;
     let orderBy = this.state.orderBy;
     let orderDir = this.state.orderDir;
-    filteredAppts = _.orderBy(filteredAppts, appt => {
+    filteredAppts = _.sortByOrder(filteredAppts, appt => {
       return appt[orderBy].toLowerCase();
     },orderDir);
 
@@ -72,7 +82,12 @@ export default class App extends Component {
           handleToogle={this.addDisplay}
           addAppt={ this.addAppointment }
         />
-        <SearchAppts />
+        <SearchAppts
+          orderBy={this.state.orderBy}
+          orderDir={this.state.orderDir}
+          sortProperty={this.setSortProperty}
+          sortOrder={this.setSortOrder}
+        />
         <ul className="item-list media-list">
           { filteredAppts.map( this.listAppointments )}
         </ul>

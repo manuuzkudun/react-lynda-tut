@@ -1,6 +1,20 @@
 import React from 'react';
 
 export default class SearchAppts extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleSort = this.handleSort.bind(this);
+    this.handleOrder = this.handleOrder.bind(this);
+  }
+
+  handleSort(e) {
+    this.props.sortProperty(e.target.id);
+  }
+
+  handleOrder(e) {
+    this.props.sortOrder(e.target.id);
+  }
+
   render(){
     return(
       <div className="row search-appointments">
@@ -11,12 +25,17 @@ export default class SearchAppts extends React.Component {
               <button type="button" className="btn btn-primary dropdown-toggle"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sort by: <span className="caret"></span></button>
                 <ul className="dropdown-menu dropdown-menu-right">
-                  <li><a href="#" id="petName">Pet Name</a></li>
-                  <li><a href="#" id="aptDate">Date</a></li>
-                  <li><a href="#" id="ownerName">Owner</a></li>
+                  <li><a href="#" onClick={ this.handleSort } id="petName">Pet Name {(this.props.orderBy === 'petName') ? <span className="glyphicon glyphicon-ok"></span> : null}
+                  </a></li>
+                  <li><a href="#" onClick={ this.handleSort } id="aptDate">Date {(this.props.orderBy === 'aptDate') ? <span className="glyphicon glyphicon-ok"></span> : null}
+                  </a></li>
+                  <li><a href="#" onClick={ this.handleSort } id="ownerName">Owner {(this.props.orderBy === 'ownerName') ? <span className="glyphicon glyphicon-ok"></span> : null}
+                  </a></li>
                   <li role="separator" className="divider"></li>
-                  <li><a href="#" id="asc">Asc</a></li>
-                  <li><a href="#" id="desc">Desc</a></li>
+                  <li><a href="#" onClick={ this.handleOrder } id="asc">Asc {(this.props.orderDir === 'asc') ? <span className="glyphicon glyphicon-ok"></span> : null}
+                  </a></li>
+                  <li><a href="#" onClick={ this.handleOrder } id="desc">Desc {(this.props.orderDir === 'desc') ? <span className="glyphicon glyphicon-ok"></span> : null}
+                  </a></li>
                 </ul>
             </div>
           </div>
