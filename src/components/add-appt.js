@@ -4,10 +4,32 @@ export default class AddAppt extends React.Component {
   constructor(props) {
     super(props);
     this.toogleFormDisplay = this.toogleFormDisplay.bind(this);
+    this.handleAdd = this.handleAdd.bind(this);
+    this.resetForm = this.resetForm.bind(this);
+  }
+
+  resetForm() {
+  Object.keys(this.refs).forEach( prop =>{
+    this.refs[prop].value = '';
+  });
+
   }
 
   toogleFormDisplay() {
     this.props.handleToogle();
+  }
+
+  handleAdd(e) {
+    let tempItem = {
+      petName: this.refs.inputPetName.value,
+      ownerName: this.refs.inputOwnerName.value,
+      aptDate: this.refs.inputAptDate.value + ' '
+        + this.refs.inputAptTime.value,
+      aptNotes: this.refs.inputAptNotes.value
+    }
+    e.preventDefault();
+    this.props.addAppt(tempItem);
+    this.resetForm();
   }
 
   render(){
@@ -21,7 +43,7 @@ export default class AddAppt extends React.Component {
           Add Appointment
         </div>
         <div className="panel-body" style={ displayFormBody }>
-          <form className="add-appointment form-horizontal">
+          <form className="add-appointment form-horizontal" onSubmit={this.handleAdd}>
             <div className="form-group">
               <label className="col-sm-2 control-label" htmlFor="petName">Pet Name</label>
               <div className="col-sm-10">

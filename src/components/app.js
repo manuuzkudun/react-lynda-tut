@@ -14,6 +14,13 @@ export default class App extends Component {
     this.removeAppointment = this.removeAppointment.bind(this);
     this.listAppointments = this.listAppointments.bind(this);
     this.addDisplay = this.addDisplay.bind(this);
+    this.addAppointment = this.addAppointment.bind(this);
+  }
+
+  addAppointment(appt) {
+    let appts = this.state.appointments;
+    appts.push(appt);
+    this.setState({appointments: appts});
   }
 
   removeAppointment(item) {
@@ -53,6 +60,7 @@ export default class App extends Component {
         <AddAppt
           bodyVisible={this.state.apptBodyVisible}
           handleToogle={this.addDisplay}
+          addAppt={ this.addAppointment }
         />
         <ul className="item-list media-list">
           { this.state.appointments.map( this.listAppointments )}
