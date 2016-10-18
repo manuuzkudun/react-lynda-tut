@@ -5,6 +5,7 @@ export default class SearchAppts extends React.Component {
     super(props);
     this.handleSort = this.handleSort.bind(this);
     this.handleOrder = this.handleOrder.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
   }
 
   handleSort(e) {
@@ -15,12 +16,16 @@ export default class SearchAppts extends React.Component {
     this.props.sortOrder(e.target.id);
   }
 
+  handleSearch(e) {
+    this.props.seachTerm(e.target.value);
+  }
+
   render(){
     return(
       <div className="row search-appointments">
         <div className="col-sm-offset-3 col-sm-6">
           <div className="input-group">
-            <input id="SearchApts" placeholder="Search" type="text" className="form-control" aria-label="Search Appointments" />
+            <input id="SearchApts" placeholder="Search" onChange={this.handleSearch} type="text" className="form-control" aria-label="Search Appointments" />
             <div className="input-group-btn">
               <button type="button" className="btn btn-primary dropdown-toggle"
                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Sort by: <span className="caret"></span></button>

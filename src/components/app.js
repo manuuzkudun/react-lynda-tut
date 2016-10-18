@@ -12,7 +12,8 @@ export default class App extends Component {
       appointments: [],
       apptBodyVisible: false,
       orderBy: 'petName',
-      orderDir: 'asc'
+      orderDir: 'asc',
+      searchQuery: ''
     };
     this.removeAppointment = this.removeAppointment.bind(this);
     this.listAppointments = this.listAppointments.bind(this);
@@ -20,6 +21,13 @@ export default class App extends Component {
     this.addAppointment = this.addAppointment.bind(this);
     this.setSortProperty = this.setSortProperty.bind(this);
     this.setSortOrder = this.setSortOrder.bind(this);
+    this.searchAppointments = this.searchAppointments.bind(this);
+  }
+
+  searchAppointments(q) {
+    this.setState({
+      searchQuery: q
+    });
   }
 
   addAppointment(appt) {
@@ -68,9 +76,24 @@ export default class App extends Component {
   }
 
   render() {
-    let filteredAppts = this.state.appointments;
+    let filteredAppts = [];
     let orderBy = this.state.orderBy;
     let orderDir = this.state.orderDir;
+    let searchQuery = this.state.searchQuery;
+    let appointments = this.state.appointments;
+
+    appointments.forEach( appt => {
+      if(
+        (appt.petName.toLowerCase().indexOf(searchQuery) != -1) ||
+        (appt.ownerName.toLowerCase().indexOf(searchQuery) != -1) ||
+        (appt.aptDate.toLowerCase().indexOf(searchQuery) != -1) ||
+        (appt.aptNotes.toLowerCase().indexOf(searchQuery) != -1)
+      ){
+        filteredAppts.push(appt);
+      }
+    });
+
+
     filteredAppts = _.sortByOrder(filteredAppts, appt => {
       return appt[orderBy].toLowerCase();
     },orderDir);
@@ -87,6 +110,7 @@ export default class App extends Component {
           orderDir={this.state.orderDir}
           sortProperty={this.setSortProperty}
           sortOrder={this.setSortOrder}
+          seachTerm={this.searchAppointments}
         />
         <ul className="item-list media-list">
           { filteredAppts.map( this.listAppointments )}
