@@ -21590,7 +21590,7 @@
 	    key: 'searchAppointments',
 	    value: function searchAppointments(q) {
 	      this.setState({
-	        searchQuery: q
+	        searchQuery: q.toLowerCase()
 	      });
 	    }
 	  }, {

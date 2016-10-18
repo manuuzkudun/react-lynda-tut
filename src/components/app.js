@@ -26,7 +26,7 @@ export default class App extends Component {
 
   searchAppointments(q) {
     this.setState({
-      searchQuery: q
+      searchQuery: q.toLowerCase()
     });
   }
 
