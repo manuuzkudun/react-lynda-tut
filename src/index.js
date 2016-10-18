@@ -10,6 +10,6 @@ const createStoreWithMiddleware = applyMiddleware()(createStore);
 
 ReactDOM.render(
   <Provider store={createStoreWithMiddleware(reducers)}>
-    <App source="./src/data/appointments.json"/>
+    <App source="./appointments.json"/>
   </Provider>
   , document.querySelector('#petAppointments'));
