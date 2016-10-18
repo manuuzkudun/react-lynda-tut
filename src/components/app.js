@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PetApptItem from './pet-appt-item';
 import AddAppt from './add-appt';
+import SearchAppts from './search-appts';
 import axios from 'axios';
 import _ from 'lodash';
 
@@ -9,7 +10,9 @@ export default class App extends Component {
     super(props);
     this.state = {
       appointments: [],
-      apptBodyVisible: false
+      apptBodyVisible: false,
+      orderBy: 'petName',
+      orderDir: 'asc'
     };
     this.removeAppointment = this.removeAppointment.bind(this);
     this.listAppointments = this.listAppointments.bind(this);
@@ -55,6 +58,13 @@ export default class App extends Component {
   }
 
   render() {
+    let filteredAppts = this.state.appointments;
+    let orderBy = this.state.orderBy;
+    let orderDir = this.state.orderDir;
+    filteredAppts = _.orderBy(filteredAppts, appt => {
+      return appt[orderBy].toLowerCase();
+    },orderDir);
+
     return (
       <div className="interface">
         <AddAppt
@@ -62,8 +72,9 @@ export default class App extends Component {
           handleToogle={this.addDisplay}
           addAppt={ this.addAppointment }
         />
+        <SearchAppts />
         <ul className="item-list media-list">
-          { this.state.appointments.map( this.listAppointments )}
+          { filteredAppts.map( this.listAppointments )}
         </ul>
       </div>
     ) //return
